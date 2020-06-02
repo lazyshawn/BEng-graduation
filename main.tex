@@ -1,0 +1,66 @@
+% -*- Coding: UTF-8 -*-
+% Project： Hitszthesis
+%
+% Author: Shawn
+%
+
+\input{style/preamble}  % 导言区设置
+\usepackage{pdfpages}
+
+\begin{document}
+    \maketitle
+
+    \frontmatter
+    % --- Abstract / 摘要 ---
+    \input{contents/abstract}
+
+    % --- Contents / 目录 ----
+    \tableofcontents
+
+
+    \mainmatter
+    % --- Main body / 正文 ---
+    % \input{contents/introduction}    % 绪论
+    % \input{contents/denotation}      % 物理量名称及符号表
+    % \input{contents/introduction}
+    \input{contents/chapter01/chapter-01}      % 正文
+    \input{contents/chapter02/chapter-02}      %
+    \input{contents/chapter03/chapter-03}      %
+    \input{contents/chapter04/chapter-04}      %
+    \input{contents/conclusion}      % 结论
+
+
+    % \backmatter
+    % --- Reference / 参考文献 ---
+    %\input{refs/ref}    % 手动管理的参考文献
+    \bibliography{contents/refs/reference}
+
+    % --- Authorization / 原创性声明 ---
+    \input{contents/authorization}
+
+    % --- Acknowledgment / 致谢 ---
+    \input{contents/acknowledgment}
+
+    % --- Appendix / 附录 ---
+    \appendix
+    \include{contents/appendices/appendix-01}
+    \input{contents/appendices/appendix-02}
+    \input{contents/appendices/appendix-03}
+    \input{contents/appendices/appendix-04}
+    \input{contents/appendices/appendix-05}
+
+    \includepdf[pages={1,2,3,4,5,6,7,8}]{contents/appendices/article.pdf}
+
+
+\end{document}
+
+!!!!! ------ Common commands: --------!!!!!
+%\syntaxonly		% 只检查语法
+%\includeonly{sections/section-01,appendixes/appendix-01}	% Only coding these sections
+%\input{equations/equation-01}
+%\input{pictures/pic-01}
+%\input{tables/tab1-1}
+%\vspace{-0.3cm}		% 修改图表等及其名称与正文之间的相对位置
+
+!!!!! ------- Note: ------- !!!!!
+修改工程名称
