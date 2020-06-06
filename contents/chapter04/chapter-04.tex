@@ -32,6 +32,25 @@
 控制器和相机均通过 USB 线缆连接上位机;
 机械臂用专用线缆连接控制箱,控制箱通过网线连接上位机。
 
+由于本项目中机械臂不需要运动, 所以为了便于实验, 我们简化了实验装置,
+使用设计的支架代替机械臂来固定夹具和相机。
+我们最终搭建的实验平台如图\ref{fig:experiment}所示,
+依照图示方法固定设备后, 连接电路后即可进行实验。
+
+\begin{figure}[!h]
+  \centering
+    \subfloat[俯视图]{
+      \includegraphics[width=7.2cm]{chapter04/pic/exp-1}
+    }
+    \hspace{0pt}
+    \subfloat[侧视图]{
+      \includegraphics[width=7.2cm]{chapter04/pic/exp-2}
+    }
+  \caption{本项目搭建的实验平台}
+  \label{fig:experiment}
+  \vspace{-0.3cm}
+\end{figure}
+
 \section{压力传感器的校准}
 实验使用的压力传感器类型为:宇博智能 RFP601 型薄膜压力传感器,量程为500g,
 是一款压阻式单点压力传感器, 响应时间为微秒级。
@@ -76,7 +95,7 @@ $a'$, $c'$, $k'$, $a$, $c$ , $k$ 均为与电阻 $R$ 有关的常数。
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale=0.3]{chapter04/pic/4-3}
+  \includegraphics[scale=0.4]{chapter04/pic/4-3}
   \caption{数据采集电路图}
   \label{fig:4-3}
   \vspace{-0.3cm}
@@ -92,7 +111,7 @@ $c = − 6.431$ , $ k = 10.72 $ , $a = 0.4967$ ,置信概率为 $95\%$ 。
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale=0.63]{chapter04/pic/4-4}
+  \includegraphics[scale=0.57]{chapter04/pic/4-4}
   \caption{采集数据散点图与拟合图}
   \label{fig:4-4}
   \vspace{-0.3cm}
@@ -178,6 +197,94 @@ $k_p = 0.0008$ , $k_i = 0.0004$, $k_d = 0.0008$ 。
 在位置信号图上,压力在极大值和极小值附近的变化幅度有差异。
 
 
+\section{边缘检测与相机标定}
+本项目中使用的相机型号为Realsense D435。相机固定在机械臂末端，相对于夹爪位置固定，使用彩色相机测量物体的位置。
+由于操作过程中机械臂不发生运动，
+所以物体相对于相机坐标系的变化即为相对于基坐标系的变化。 
+Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵, 
+每个像素点均以距离左上角的像素距离来定位。
+我们实际需要获得的是图片上特定距离与实际物体的长度的对应关系, 
+即每个像素点与实际长度单位的关系, 这需要通过标定相机来确定。
+
+本项目使用如图\ref{fig:src}a)所示的标定物进行标定。
+图中黑色区域长度为$20mm$, 将标定物放在被控物体需要安放的位置,
+通过测量相机返回的图片中黑色区域的像素点宽度来校准相机。
+可以通过将相机返回的图片转化为灰度图，进而使用Canny边缘检测来识别图片中黑色区域的边缘,
+如图\ref{fig:src}b)所示为识别出来轮廓, 再利用Hough变换可以计算图中直线的端点位置。
+依次遍历各条直线，计算其斜率并筛选水平的直线。将各条水平直线之间的高度差最大值记为黑色区域的像素长度，
+这样就能计算出每个像素点宽度对应的实际长度。
+
+\begin{figure}[!h]
+  \centering
+    \subfloat[相机标定原图]{
+      \includegraphics[width=7.2cm]{chapter04/pic/src}
+    }
+    \hspace{0pt}
+    \subfloat[边缘检测图]{
+      \includegraphics[width=7.2cm]{chapter04/pic/canny}
+    }
+  \caption{夹具位移及受力曲线图}
+  \label{fig:src}
+  \vspace{-0.3cm}
+\end{figure}
+
+相机标定完成后，需要对抓取物体进行定位。本项目中在实验开始前，选取物体静止时上边缘高度记为坐标轴原点，
+向下为正方向。识别物体上边缘的方法为：将物体图片转化为灰度图，利用Canny识别边缘，再利用Hough变换计算直线端点位置，
+最后根据直线斜率和高度，筛选像素点位置最低的水平直线，即物体上边缘，此直线的高度减去原点高度即为当前时刻物体的位置。
+
+
+\section{实验评估}
+完成上述实验准备后, 我们进行了多组实验, 
+实验中采用的自适应控制参数如表\ref{tab:exp}所示。
+
+\begin{table}[!h]
+\centering
+\caption{实验中自适应控制参数取值表\label{tab:exp}}
+\begin{tabular}{@{}ccccc@{}}
+\toprule[1pt]
+ \makebox[2.5em][c]{$k$}        & \makebox[2.5em][c]{$\lambda$}  &
+ \makebox[2.5em][c]{$\alpha_a$} & \makebox[2.5em][c]{$\alpha_c$}  &
+ \makebox[2.5em][c]{$\alpha_c$} \\ \midrule
+
+6        &  6        & 20      &  20     &  20    \\
+\bottomrule[1pt]
+\end{tabular}
+\end{table}
+
+在改变被控物体质量, 其他参数不变的情况下进行在手操作实验, 实验结果并不理想。
+总体表现为控制器反应过慢, 在物体开始下落后控制器并未能及时调整控制参数,
+从而导致物体超过期望位置后夹具才开始阻止物体下落。
+其中一次在手操作过程中, 物体的下落曲线和夹具压力信号曲线如图\ref{fig:fh}所示。
+
+\begin{figure}[!h]
+  \centering
+    \subfloat[物体下落曲线]{
+      \includegraphics[width=7.2cm]{chapter04/pic/h}
+    }
+    \hspace{0pt}
+    \subfloat[夹具压力信号曲线]{
+      \includegraphics[width=7.2cm]{chapter04/pic/f}
+    }
+  \caption{实验中物体运动和夹具压力信号曲线}
+  \label{fig:fh}
+  \vspace{-0.3cm}
+\end{figure}
+
+从图\ref{fig:fh}中可以看出实验效果较差。
+物体在开始时缓慢下落, 控制器并未做出反应, 而当物体快速下落一段时间后, 
+控制器才向夹爪发送较高的压力信号, 但是这时物体已经超过了期望位置。
+还存在的一个问题是压力信号变化过大, 每次压力信号发生变化时直接从最小值增加到最大值。
+
+由于实验准备不充分, 导致设计时可能忽略了部分影响因素。
+但就目前的实验状况而言, 我们可以总结出导致实验失败的部分原因:
+一是夹具容易晃动导致夹爪和物体接触不完全, 
+导致夹爪在形同的位置时物体的运动状态可能不同; 
+图中传感器测得的实际压力为0时, 物体开始未发生滑动, 但约1s后物体缓慢下降。
+二是控制参数调整不合理, 图\ref{fig:fh}b)中压力信号变化过大就是这个原因导致的。
+三是控制参数饱和积分饱和的问题, 自适应控制器中, 控制参数单次的调整量与误差有关, 
+在实验开始时, 压力信号为0但物体还未开始下落, 此时控制器还在对参数进行误差累加,
+导致物体开始下落后, 控制器需要一定时间来抵消饱和误差, 之后才开始产生反向信号。
+
 \section{仿真实验}
 为验证上文提出的想法的可行性,我们设计了仿真实验。
 采用表 4-1 所示的物理参数带入 Simulink 模型进行仿真实验,
@@ -213,7 +320,7 @@ $k_p = 0.0008$ , $k_i = 0.0004$, $k_d = 0.0008$ 。
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=12cm]{chapter04/pic/h_f}
+  \includegraphics[width=10cm]{chapter04/pic/h_f}
   \caption{工具位移曲线}
   \label{fig:4-7}
   \vspace{-0.3cm}

@@ -73,6 +73,7 @@
 \RequirePackage{etoolbox}   % A toolbox of programming facilities
 \RequirePackage{fancyhdr}   % 页眉设置
 \RequirePackage{xcolor}     % 设置颜色
+\RequirePackage{enumitem}   % 列表环境
 % \RequirePackage{gbt7714}    % 参考文献标准: GB/T 7714
 \RequirePackage{hyperref}   % 超链接
 \RequirePackage[numbers, super, sort&compress, square]{natbib}
@@ -221,7 +222,7 @@
 
         \vspace{2.2cm}
         % 日期
-        \zihao{-4}\song\textbf{2020年7月}
+        \zihao{-4}\song\textbf{2020年6月}
     \end{center}
     }
 
@@ -248,8 +249,8 @@
         \begin{tabular}{l@{\qquad  }l}
             \zihao{-2}
             \makebox[\tokenlength][s]{\zihao{-2}\hitsz@token@title}: &
-            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-2}\bfseries\hitsz@info@title}}} \\
-              & \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-2}\bfseries\hitsz@info@appendanttitle}}} \\
+            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-2}\bfseries\hitsz@info@title}}} \\
+              & \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-2}\bfseries\hitsz@info@appendanttitle}}} \\
               &
         \end{tabular}
 
@@ -257,19 +258,19 @@
         \renewcommand{\arraystretch}{1.98} %表格间距
         \begin{tabular}{l@{:\qquad }l}
             \makebox[\tokenlength][s]{\hitsz@token@major} &
-            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-3}\bfseries\hitsz@info@major}}} \\
+            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-3}\bfseries\hitsz@info@major}}} \\
 
             \makebox[\tokenlength][s]{\hitsz@token@stunumber} &
-            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-3}\bfseries\hitsz@info@stunumber}}} \\
+            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-3}\bfseries\hitsz@info@stunumber}}} \\
 
             \makebox[\tokenlength][s]{\hitsz@token@student} &
-            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-3}\bfseries\hitsz@info@author}}}  \\
+            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-3}\bfseries\hitsz@info@author}}}  \\
 
             \makebox[\tokenlength][s]{\hitsz@token@teacher} &
-            \uline{\makebox[\infowidth][l]{\hspace{1em}{\zihao{-3}\bfseries\hitsz@info@teacher}}} \\
+            \uline{\makebox[\infowidth][l]{\hspace{1em}{\song\zihao{-3}\bfseries\hitsz@info@teacher}}} \\
 
             \makebox[\tokenlength][s]{\hitsz@token@defensedate} &
-            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\zihao{-3}\bfseries\hitsz@info@defensedate}}}
+            \uline{\makebox[\infowidth][l]{\hspace*{1em}{\song\zihao{-3}\bfseries\hitsz@info@defensedate}}}
         \end{tabular}
         \renewcommand{\arraystretch}{1}
         }
