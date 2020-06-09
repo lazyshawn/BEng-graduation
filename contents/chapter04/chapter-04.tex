@@ -34,34 +34,50 @@
 
 由于本项目中机械臂不需要运动, 所以为了便于实验, 我们简化了实验装置,
 使用设计的支架代替机械臂来固定夹具和相机。
-我们最终搭建的实验平台如图\ref{fig:experiment}所示,
+我们最终搭建的实验平台的俯视图和侧视图分别如图\ref{fig:exp-1}和图\ref{fig:exp-2}所示,
 依照图示方法固定设备后, 连接电路后即可进行实验。
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
-    \subfloat[俯视图]{
-      \includegraphics[width=7.2cm]{chapter04/pic/exp-1}
-    }
-    \hspace{0pt}
-    \subfloat[侧视图]{
-      \includegraphics[width=7.2cm]{chapter04/pic/exp-2}
-    }
-  \caption{本项目搭建的实验平台}
-  \label{fig:experiment}
+  \includegraphics[width=11.3cm]{chapter04/pic/exp-1}
+  \caption{\label{fig:exp-1}
+    实验平台俯视图}
   \vspace{-0.3cm}
 \end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=11.3cm]{chapter04/pic/exp-2}
+  \caption{\label{fig:exp-2}
+    实验平台侧视图}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[俯视图]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/exp-1}
+%     }
+%     \hspace{0pt}
+%     \subfloat[侧视图]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/exp-2}
+%     }
+%   \caption{本项目搭建的实验平台}
+%   \label{fig:experiment}
+%   \vspace{-0.3cm}
+% \end{figure}
 
 \section{压力传感器的校准}
 实验使用的压力传感器类型为:宇博智能 RFP601 型薄膜压力传感器,量程为500g,
 是一款压阻式单点压力传感器, 响应时间为微秒级。
-图 \ref{fig:4-2} 所示是传感器的电阻—压力曲线图。
+图 \ref{fig:4-2} 所示是该传感器的压阻特新曲线图。
 实验使用的信号采集器为恒凯 USB 数据采集卡,
-提供 12 位 AD采集通道支持 0~3.3V 模拟输入,最高采样频率可达 100Ksps.
+提供 12 位 AD采集通道支持 $0\sim 3.3V$ 模拟输入,最高采样频率可达 100Ksps.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale=0.7]{chapter04/pic/4-2}
-  \caption{压力传感器质量---电阻曲线}
+  \includegraphics[width=12cm]{chapter04/pic/4-2}
+  \caption{薄膜式压力传感器压的阻特性曲线}
   \label{fig:4-2}
   \vspace{-0.3cm}
 \end{figure}
@@ -105,13 +121,13 @@ $a'$, $c'$, $k'$, $a$, $c$ , $k$ 均为与电阻 $R$ 有关的常数。
 $u$ 趋近于 $cV$ 时传感器灵敏度过低。适当调整固定电阻的阻值可以改善传感器效果,
 经实验确定该项目拟用阻值为 $R=10k\Omega$ 的固定电阻。
 
-多次测量不同压力下 A 点的电压值,绘制散点图如图(\ref{fig:4-4})所示,利用 Matlab 进行
+多次测量不同压力下 A 点的电压值,绘制散点图如图\ref{fig:4-4}所示,利用 Matlab 进行
 拟合,拟合结果确定式(\ref{equ:4-3})中的参数为
 $c = − 6.431$ , $ k = 10.72 $ , $a = 0.4967$ ,置信概率为 $95\%$ 。
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale=0.57]{chapter04/pic/4-4}
+  \includegraphics[width=13.5cm]{chapter04/pic/4-4}
   \caption{采集数据散点图与拟合图}
   \label{fig:4-4}
   \vspace{-0.3cm}
@@ -125,22 +141,23 @@ $c = − 6.431$ , $ k = 10.72 $ , $a = 0.4967$ ,置信概率为 $95\%$ 。
 
 在力控实验中经过多次参数调整后,我们最终采用的 PD 控制器参数为
 $k_p = 0.0008$ , $k_i = 0.0004$, $k_d = 0.0008$ 。
-图 \ref{fig:4-5} 和图 \ref{fig:4-6} 分别展示了使用改良PD控制算法后系统的输出信号
+下面图\ref{fig:150}至图\ref{fig:sin_x}分别展示了使用改良PD控制算法后系统的输出信号
 相对恒定输入信号和正弦输入信号的跟踪效果。
 
 
-\begin{figure}[!h]
-  \centering
-    \subfloat[压力变化曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/150}
-    }
-    \hspace{0pt}
-    \subfloat[夹爪位置信号]{
-      \includegraphics[width=7.2cm]{chapter04/pic/150_x}
-    }
-  \caption{\label{fig:4-5}阶跃信号下的压力和夹爪位置信号曲线}
-  \vspace{-0.3cm}
-\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/150}
+%     }
+%     \hspace{0pt}
+%     \subfloat[夹爪位置信号]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/150_x}
+%     }
+%   \caption{\label{fig:4-5}阶跃信号下的压力和夹爪位置信号曲线}
+%   \vspace{-0.3cm}
+% \end{figure}
 
 % \begin{figure}[!ht]
 %   \centering
@@ -150,32 +167,49 @@ $k_p = 0.0008$ , $k_i = 0.0004$, $k_d = 0.0008$ 。
 %   \vspace{-0.3cm}
 % \end{figure}
 
-图\ref{fig:4-5}a)可以展示了 改进后的控制器在阶跃输入信号下的控制效果。
+图\ref{fig:150}可以展示了 改进后的控制器在阶跃输入信号下的控制效果。
 最终压力均值保持在期望值 150 g左右,输出信号的波动主要原因是传感器误差,
 波动范围在可接受范围内。
 调节时间约为 2s ,这并不影响我们的实验的控制效果,因为实际实验中,
 初始状态下夹爪是抓紧工具的,而在运动过程中压力变化虽然很频繁但是增量不大,
 所以实验过程中压力信号的改变幅度不会过大,压力信号与实际压力值相差也较小,
 因此图示的调节时间是可以接受的。
-图\ref{fig:4-5}b)展示了在这一过程中控制器对夹爪发送的位置命令,
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=11cm]{chapter04/pic/150}
+  \caption{\label{fig:150}
+    阶跃信号下传感器采集的压力信号曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+图\ref{fig:150_x}展示了在这一过程中控制器对夹爪发送的位置命令,
 可以看到位置信号和压力信号的变化趋势趋于一致,
 而且在压力值到达150g附近时位置命令保持稳定,只有轻微的振动,
 这也说明了压力的波动是由于传感器造成的。
 
-
-
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
-    \subfloat[压力变化曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/sin}
-    }
-    \hspace{0pt}
-    \subfloat[夹爪位置信号]{
-      \includegraphics[width=7.2cm]{chapter04/pic/sin_x}
-    }
-  \caption{\label{fig:4-6}正弦信号下的压力和夹爪位置信号曲线}
+  \includegraphics[width=10cm]{chapter04/pic/150_x}
+  \caption{\label{fig:150_x}
+    阶跃信号下夹爪位移信号曲线}
   \vspace{-0.3cm}
 \end{figure}
+
+
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/sin}
+%     }
+%     \hspace{0pt}
+%     \subfloat[夹爪位置信号]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/sin_x}
+%     }
+%   \caption{\label{fig:4-6}正弦信号下的压力和夹爪位置信号曲线}
+%   \vspace{-0.3cm}
+% \end{figure}
 
 % \begin{figure}[!ht]
 %   \centering
@@ -185,56 +219,89 @@ $k_p = 0.0008$ , $k_i = 0.0004$, $k_d = 0.0008$ 。
 %   \vspace{-0.3cm}
 % \end{figure}
 
-从图\ref{fig:4-6}a)可以看出在信号持续变化的情况下 PD 控制器的控制效果也符合预期。
+从图\ref{fig:sin}可以看出在信号持续变化的情况下 PD 控制器的控制效果也符合预期。
 长时间的控制下,虽然传感器误差会有一定的波动,但是系统保持稳定,
 实际压力均值持续跟随正弦输入信号,没有明显的误差,输出信号的波动范围在可接受范围内。
 同理调节时间并不影响我们的实验的控制效果。
 结合这两个实验可以说明 PD控制是可以满足我们的控制需求的。
-图\ref{fig:4-6}b)展示了在该过程中控制器的位置指令,
-可以看到位置信号和压力信号的变化趋势趋于一致。
-位置信号不是严格的正弦信号, 这是因为传感器采集的电压信号转化为压力信号不是线性的。
-所以在不同压力大小下产生同样压力差所需的位移大小不同,
-在位置信号图上,压力在极大值和极小值附近的变化幅度有差异。
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{chapter04/pic/sin}
+  \caption{\label{fig:sin}
+    正弦输入信号下传感器采集的压力信号曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+图\ref{fig:sin_x}展示了在该过程中控制器的位置指令的变化曲线,
+可以看到位置信号和压力信号的变化趋势趋于一致。
+同样，这也说明压力信号中的偶尔出现较大的偏差是由于传感器测量误差导致的，
+应该在PD控制器中添加滤波算法，以减小或排除偶然误差。
+%位置信号不是严格的正弦信号, 这是因为传感器采集的电压信号转化为压力信号不是线性的。
+%所以在不同压力大小下产生同样压力差所需的位移大小不同,
+%在位置信号图上,压力在极大值和极小值附近的变化幅度有差异。
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{chapter04/pic/sin_x}
+  \caption{\label{fig:sin_x}
+    正弦输入信号下夹具的位移信号曲线}
+  \vspace{-0.3cm}
+\end{figure}
 
 \section{边缘检测与相机标定}
 本项目中使用的相机型号为Realsense D435。相机固定在机械臂末端，相对于夹爪位置固定，使用彩色相机测量物体的位置。
 由于操作过程中机械臂不发生运动，
-所以物体相对于相机坐标系的变化即为相对于基坐标系的变化。 
-Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵, 
+所以物体相对于相机坐标系的变化即为相对于基坐标系的变化。
+Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 每个像素点均以距离左上角的像素距离来定位。
-我们实际需要获得的是图片上特定距离与实际物体的长度的对应关系, 
+我们实际需要获得的是图片上特定距离与实际物体的长度的对应关系,
 即每个像素点与实际长度单位的关系, 这需要通过标定相机来确定。
 
-本项目使用如图\ref{fig:src}a)所示的标定物进行标定。
+本项目使用如图\ref{fig:src}所示的标定物进行标定。
 图中黑色区域长度为$20mm$, 将标定物放在被控物体需要安放的位置,
 通过测量相机返回的图片中黑色区域的像素点宽度来校准相机。
 可以通过将相机返回的图片转化为灰度图，进而使用Canny边缘检测来识别图片中黑色区域的边缘,
-如图\ref{fig:src}b)所示为识别出来轮廓, 再利用Hough变换可以计算图中直线的端点位置。
+如图\ref{fig:canny}所示为识别出来轮廓, 再利用Hough变换可以计算图中直线的端点位置。
 依次遍历各条直线，计算其斜率并筛选水平的直线。将各条水平直线之间的高度差最大值记为黑色区域的像素长度，
 这样就能计算出每个像素点宽度对应的实际长度。
 
-\begin{figure}[!h]
-  \centering
-    \subfloat[相机标定原图]{
-      \includegraphics[width=7.2cm]{chapter04/pic/src}
-    }
-    \hspace{0pt}
-    \subfloat[边缘检测图]{
-      \includegraphics[width=7.2cm]{chapter04/pic/canny}
-    }
-  \caption{夹具位移及受力曲线图}
-  \label{fig:src}
-  \vspace{-0.3cm}
-\end{figure}
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[相机标定原图]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/src}
+%     }
+%     \hspace{0pt}
+%     \subfloat[边缘检测图]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/canny}
+%     }
+%   \caption{夹具位移及受力曲线图}
+%   \label{fig:src}
+%   \vspace{-0.3cm}
+% \end{figure}
 
 相机标定完成后，需要对抓取物体进行定位。本项目中在实验开始前，选取物体静止时上边缘高度记为坐标轴原点，
 向下为正方向。识别物体上边缘的方法为：将物体图片转化为灰度图，利用Canny识别边缘，再利用Hough变换计算直线端点位置，
 最后根据直线斜率和高度，筛选像素点位置最低的水平直线，即物体上边缘，此直线的高度减去原点高度即为当前时刻物体的位置。
 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{chapter04/pic/src}
+  \caption{\label{fig:src}
+    相机采集的图片}
+  \vspace{-0.3cm}
+\end{figure}
 
-\section{实验评估}
-完成上述实验准备后, 我们进行了多组实验, 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10cm]{chapter04/pic/canny}
+  \caption{\label{fig:canny}
+    Canny边缘检测提取的边缘信息}
+  \vspace{-0.3cm}
+\end{figure}
+
+\section{实验结果及其分析}
+完成上述实验准备后, 我们进行了多组实验,
 实验中采用的自适应控制参数如表\ref{tab:exp}所示。
 
 \begin{table}[!h]
@@ -254,41 +321,58 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 在改变被控物体质量, 其他参数不变的情况下进行在手操作实验, 实验结果并不理想。
 总体表现为控制器反应过慢, 在物体开始下落后控制器并未能及时调整控制参数,
 从而导致物体超过期望位置后夹具才开始阻止物体下落。
-其中一次在手操作过程中, 物体的下落曲线和夹具压力信号曲线如图\ref{fig:fh}所示。
+其中一次在手操作过程中, 物体的下落曲线和夹具压力信号曲线分别
+如图\ref{fig:h}和图\ref{fig:f}所示。
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
-    \subfloat[物体下落曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/h}
-    }
-    \hspace{0pt}
-    \subfloat[夹具压力信号曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/f}
-    }
-  \caption{实验中物体运动和夹具压力信号曲线}
-  \label{fig:fh}
+  \includegraphics[width=12cm]{chapter04/pic/h}
+  \caption{\label{fig:h}
+    在手操作实验过程中物体的下落曲线}
   \vspace{-0.3cm}
 \end{figure}
 
-从图\ref{fig:fh}中可以看出实验效果较差。
-物体在开始时缓慢下落, 控制器并未做出反应, 而当物体快速下落一段时间后, 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=12cm]{chapter04/pic/f}
+  \caption{\label{fig:f}
+    在手操作实验过程中传感器压力信号曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[物体下落曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/h}
+%     }
+%     \hspace{0pt}
+%     \subfloat[夹具压力信号曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/f}
+%     }
+%   \caption{实验中物体运动和夹具压力信号曲线}
+%   \label{fig:fh}
+%   \vspace{-0.3cm}
+% \end{figure}
+
+从图\ref{fig:h}中可以看出实验效果较差。
+物体在开始时缓慢下落, 控制器并未做出反应, 而当物体快速下落一段时间后,
 控制器才向夹爪发送较高的压力信号, 但是这时物体已经超过了期望位置。
 还存在的一个问题是压力信号变化过大, 每次压力信号发生变化时直接从最小值增加到最大值。
 
 由于实验准备不充分, 导致设计时可能忽略了部分影响因素。
 但就目前的实验状况而言, 我们可以总结出导致实验失败的部分原因:
-一是夹具容易晃动导致夹爪和物体接触不完全, 
-导致夹爪在形同的位置时物体的运动状态可能不同; 
+一是夹具容易晃动导致夹爪和物体接触不完全,
+导致夹爪在形同的位置时物体的运动状态可能不同;
 图中传感器测得的实际压力为0时, 物体开始未发生滑动, 但约1s后物体缓慢下降。
-二是控制参数调整不合理, 图\ref{fig:fh}b)中压力信号变化过大就是这个原因导致的。
-三是控制参数饱和积分饱和的问题, 自适应控制器中, 控制参数单次的调整量与误差有关, 
+二是控制参数调整不合理, 图\ref{fig:f}中压力信号变化过大就是这个原因导致的。
+三是控制参数饱和积分饱和的问题, 自适应控制器中, 控制参数单次的调整量与误差有关,
 在实验开始时, 压力信号为0但物体还未开始下落, 此时控制器还在对参数进行误差累加,
 导致物体开始下落后, 控制器需要一定时间来抵消饱和误差, 之后才开始产生反向信号。
 
 \section{仿真实验}
 为验证上文提出的想法的可行性,我们设计了仿真实验。
-采用表 4-1 所示的物理参数带入 Simulink 模型进行仿真实验,
-观察实验现象并分析仿真结果。虽然仿真实验中数据可能会过于理想,
+采用表 4-1 所示的物理参数带入图\ref{fig:3-5}所示的 Simulink 模型中进行仿真实验,
+观察实验现象并分析仿真结果与实验结果的差距和原因。虽然仿真实验中数据可能会过于理想,
 但是这在某种程度上也能佐证方案的合理性。
 在这次仿真试验中,我们通过直接给夹爪运动副施加控制力,即力控是理想的。
 这样可以证明我们推导的动力学模型和控制模型理论上是正确的。
@@ -320,14 +404,14 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=10cm]{chapter04/pic/h_f}
+  \includegraphics[width=11cm]{chapter04/pic/h_f}
   \caption{工具位移曲线}
   \label{fig:4-7}
   \vspace{-0.3cm}
 \end{figure}
 
 
-夹具位置信号的变化曲线如图 \ref{fig:4-8}a) 所示。图中 t = 0 s 附近,
+夹具位置信号的变化曲线如图 \ref{fig:p_f} 所示。图中 t = 0 s 附近,
 即仿真刚开始时的一小段突变是由于初始状态下夹具与工具之间并未紧密接触,
 工具的快速下落与参考模型中的输出信号的广义偏差很大,所以夹具位移突变很大。
 时间在0s 到 2s左右夹具位置几乎无变化, 这是因为在这段时间内夹具的运动可近似为匀速运动,
@@ -347,31 +431,39 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 %   \vspace{-0.3cm}
 % \end{figure}
 
-压力传感器记录的数据如图 \ref{fig:4-8}b) 所示。压力的变化趋势与夹具位移一致,
+压力传感器记录的数据如图 \ref{fig:fn_f} 所示。压力的变化趋势与夹具位移一致,
 这是因为接触模型中形变量与弹性力成正比。
 为了更好的仿真效果,需要修正夹具模型,将其修改为刚度系数较小的弹性体。
 
-% \begin{figure}[!ht]
-%   \centering
-%   \includegraphics[scale=0.6]{chapter04/pic/4-9}
-%   \caption{工具单侧所受正压力变化曲线}
-%   \label{fig:4-9}
-%   \vspace{-0.3cm}
-% \end{figure}
-
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
-    \subfloat[夹具位移曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/p_f}
-    }
-    \hspace{0pt}
-    \subfloat[压力变化曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/fn_f}
-    }
-  \caption{夹具位移及受力曲线图}
-  \label{fig:4-8}
+  \includegraphics[width=10.2cm]{chapter04/pic/p_f}
+  \caption{\label{fig:p_f}
+    仿真实验中夹具位移曲线图}
   \vspace{-0.3cm}
 \end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10.2cm]{chapter04/pic/fn_f}
+  \caption{\label{fig:fn_f}
+    仿真实验中物体所受压力曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[夹具位移曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/p_f}
+%     }
+%     \hspace{0pt}
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/fn_f}
+%     }
+%   \caption{夹具位移及受力曲线图}
+%   \label{fig:4-8}
+%   \vspace{-0.3cm}
+% \end{figure}
 
 通过这一仿真实验,我们可以确保上文推导的工具动力学方程(式 \ref{equ:2-3})的正确性,
 以及适应性控制方程(\ref{equ:2-7})和调参规律(\ref{equ:2-8})可以保证跟踪误差的收敛,
@@ -389,7 +481,7 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=13cm]{chapter04/pic/mech_x}
+  \includegraphics[width=13.5cm]{chapter04/pic/mech_x}
   \caption{\label{fig:mech_x}
     添加力控的机械系统模块}
   \vspace{-0.3cm}
@@ -415,14 +507,14 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=12cm]{chapter04/pic/h_x}
+  \includegraphics[width=9.7cm]{chapter04/pic/h_x}
   \caption{\label{fig:h_x}
-    工具位移曲线}
+    力控仿真实验中工具位移曲线}
   \vspace{-0.3cm}
 \end{figure}
 
 
-夹具位置信号的变化曲线如图 \ref{fig:4-11}a) 所示。
+夹具位置信号的变化曲线如图 \ref{fig:p_x} 所示。
 图中夹具位置变化频繁,这是由于工具不连续的运动状态导致的,
 运动过程中需要保持工具运动曲线跟踪参考曲线,所以夹具运动频繁。
 在我们的实验中,我们发现了夹爪手指垫片的刚度系数和工具运动连续程度的定性关系。
@@ -435,21 +527,37 @@ Realsense相机获得的图片是每个像素点的BGR信息组成的矩阵,
 但是, 刚度也不能过高, 因为这需要系统具有更快的响应速度和更精准的力控。
 否则可能造成系统震荡, 或夹爪由于受力过大而保护性停止。
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
-    \subfloat[夹具位移曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/p_x}
-    }
-    \hspace{0pt}
-    \subfloat[压力变化曲线]{
-      \includegraphics[width=7.2cm]{chapter04/pic/fn_x}
-    }
-  \caption{夹具位移及受力曲线图}
-  \label{fig:4-11}
+  \includegraphics[width=9.7cm]{chapter04/pic/p_x}
+  \caption{\label{fig:p_x}
+    力控仿真实验中夹具位移曲线}
   \vspace{-0.3cm}
 \end{figure}
 
-同样,在这次实验中夹具位移也会在物体停止后持续增大。
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=9.7cm]{chapter04/pic/fn_x}
+  \caption{\label{fig:fn_x}
+    力控仿真实验中物体所受压力曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[夹具位移曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/p_x}
+%     }
+%     \hspace{0pt}
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/fn_x}
+%     }
+%   \caption{夹具位移及受力曲线图}
+%   \label{fig:4-11}
+%   \vspace{-0.3cm}
+% \end{figure}
+
+同样,如图\ref{fig:fn_x}在这次实验中夹具施加给物体的压力也会在物体停止后持续增大。
 这也由于超调量使得广义误差大于零且一直累加导致的。
 为了防止位移信号持续增大而使得信号超过阈值造成机器停止等问题,
 我们人为添加了饱和模块,以限制输出的位置指令。
