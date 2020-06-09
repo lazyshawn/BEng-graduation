@@ -140,7 +140,7 @@
 最后由于传感器采集的不稳定性， 控制器获得的输入信号会高频地波动， 为避免夹爪也随之振动，
 我们让系统偏差在一定范围内时输出量保持恒定。
 
-\section{仿真实验设计}
+\section{仿真的实验设计}
 利用 Simscape 可以很方便地搭建机电系统模型。仿真模型可以像装配物理系统一样。
 Simscape 采用物理网格法构建模型，模块相当于物理元器件，电机、运算放大器等。
 模块之间的连线也类似物理连接，用于传递能量和数据信息，通过这种方法描述的是系统的物理结构，
@@ -200,11 +200,204 @@ $h$ 、$dh$ 分别为物体当前时刻的位置和速度；
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[scale=0.6]{chapter03/pic/3-6}
+  \includegraphics[scale=0.55]{chapter03/pic/3-6}
   \caption{控制模型子系统}
   \label{fig:3-6}
   \vspace{-0.3cm}
 \end{figure}
+
+\section{仿真实验}
+为验证上文提出的想法的可行性，我们设计了仿真实验。
+采用表 4-1 所示的物理参数带入图\ref{fig:3-5}所示的 Simulink 模型中进行仿真实验，
+观察实验现象并分析仿真结果与实验结果的差距和原因。虽然仿真实验中数据可能会过于理想，
+但是这在某种程度上也能佐证方案的合理性。
+在这次仿真试验中，我们通过直接给夹爪运动副施加控制力，即力控是理想的。
+这样可以证明我们推导的动力学模型和控制模型理论上是正确的。
+
+\begin{table}[!h]
+\centering
+\caption{仿真实验参数取值表\label{tab:4-1}}
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule[1pt]
+ \makebox[3.5em][c]{$h_d/mm$}   & \makebox[2.5em][c]{$m/g$}  &
+ \makebox[2.5em][c]{$\mu$}      & \makebox[2.5em][c]{$\sigma$}  &
+ \makebox[2.5em][c]{$k$}        & \makebox[2.5em][c]{$\lambda$}  &
+ \makebox[2.5em][c]{$\alpha_a$} & \makebox[2.5em][c]{$\alpha_c$}  &
+ \makebox[2.5em][c]{$\alpha_c$} \\ \midrule
+
+20       &  12       &  0.5     &  0.3    &2        &  6        &
+20      &  20     &  20    \\
+\bottomrule[1pt]
+\end{tabular}
+\end{table}
+
+
+工具下落过程中的位置变化曲线如图 \ref{fig:4-7} 所示。从图中可以看出，工具的位移
+曲线很好地跟随了参考模型信号，并且最终停在了目标位置 $h = 20 mm$ 处。由此可
+知，模型参考自适应控制系统能够达到理想的控制效果，本次实验中在并未给出具
+体的摩擦参数以及物体质量的情况下，平行指夹具仍然成功地控制工具运动到了目
+标位置。
+
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=11cm]{chapter04/pic/h_f}
+  \caption{工具位移曲线}
+  \label{fig:4-7}
+  \vspace{-0.3cm}
+\end{figure}
+
+
+夹具位置信号的变化曲线如图 \ref{fig:p_f} 所示。图中 t = 0 s 附近，
+即仿真刚开始时的一小段突变是由于初始状态下夹具与工具之间并未紧密接触，
+工具的快速下落与参考模型中的输出信号的广义偏差很大，所以夹具位移突变很大。
+时间在0s 到 2s左右夹具位置几乎无变化， 这是因为在这段时间内夹具的运动可近似为匀速运动，
+而在0s左右时，控制器已经通过实时的广义误差估计出了摩擦系数，
+所以这段时间内夹具只需要保持在固定位置即可实现工具的匀速运动。
+时间在 2s 到 2.5s 附近夹具位置变化频繁，
+这是因为工具速度发生变化，运动过程中需要保持工具运动曲线跟踪参考曲线，所以夹具运动频繁。
+另一方面，由于该仿真模型中夹具和工具都接近刚体，导致两模型的碰撞效果明显。
+在 3s 之后，夹具位置变化趋于稳定，说明工具运动减慢，并逐渐停止。
+由于存在少许的超调量，广义误差 s 一直小于零，所以压力应该持续增大，导致夹具位移持续增大。
+
+% \begin{figure}[!ht]
+%   \centering
+%   \includegraphics[scale=0.6]{chapter04/pic/4-8}
+%   \caption{夹具位移曲线}
+%   \label{fig:4-8}
+%   \vspace{-0.3cm}
+% \end{figure}
+
+压力传感器记录的数据如图 \ref{fig:fn_f} 所示。压力的变化趋势与夹具位移一致，
+这是因为接触模型中形变量与弹性力成正比。
+为了更好的仿真效果，需要修正夹具模型，将其修改为刚度系数较小的弹性体。
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10.2cm]{chapter04/pic/p_f}
+  \caption{\label{fig:p_f}
+    仿真实验中夹具位移曲线图}
+  \vspace{-0.3cm}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=10.2cm]{chapter04/pic/fn_f}
+  \caption{\label{fig:fn_f}
+    仿真实验中物体所受压力曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[夹具位移曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/p_f}
+%     }
+%     \hspace{0pt}
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/fn_f}
+%     }
+%   \caption{夹具位移及受力曲线图}
+%   \label{fig:4-8}
+%   \vspace{-0.3cm}
+% \end{figure}
+
+通过这一仿真实验，我们可以确保上文推导的工具动力学方程(式 \ref{equ:2-3})的正确性，
+以及适应性控制方程(\ref{equ:2-7})和调参规律(\ref{equ:2-8})可以保证跟踪误差的收敛，
+可以精准控制物体下落的轨迹。
+
+
+\section{添加力控的仿真实验}
+在实际实验过程中，理想的力控是难以实现的。
+为了更好的仿真效果， 我们需要修改仿真模型，
+我们在图 \ref{fig:3-5} 的基础上为夹爪添加了一个弹簧模型， 以模拟实际场景中的缓冲垫片。
+并且直接对运动副施加控制力的方案被修改为对运动副施加位移控制，
+以模拟控制器对夹爪发送的控制指令。
+然后添加PD控制子模块， 并调整合适的参数，以模拟真实场景中的力控效果。
+最终机械系统子模块的仿真模型图如下图 \ref{fig:mech_x} 所示。
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=13.5cm]{chapter04/pic/mech_x}
+  \caption{\label{fig:mech_x}
+    添加力控的机械系统模块}
+  \vspace{-0.3cm}
+\end{figure}
+
+再次重复上述实验， 工具的位移曲线如 \ref{fig:h_x} 所示。
+从图中可以看出，工具的位移曲线依旧能跟随了参考模型信号，
+虽然会出现频繁停止和突然运动的现象，但是工具最终依然停在了目标位置 $h = 20 mm$ 处。
+由此可知， 我们使用的控制方案能够达到理想的控制效果。
+但是这次实验中也暴露出一些问题， 比如在快达到目标位置但还未达到时，
+控制器会累计误差， 直到误差足够大时， 夹爪会张开让工具开始运动，
+如果夹爪速度不够快或者控制器响应速度不够高， 那么工具有可能会超过期望位置后才被停止。
+这一问题显然可以通过加快系统响应速度来解决， 另一方面， 也可以通过添加一容差区间来解决。
+比如让控制器检测到广义误差小到可接受范围内时， 即认为工具已经达到目标位置， 操作结束。
+图中工具运动会突然停止再突然运动，这是因为软指接触中，手指上的垫片过软。
+由于缓冲效果明显，压力传感器检测到的力变化幅度较小，手指慢慢张开后工具开始下落；
+而检测到广义误差过大后，控制器发送指令让手指闭合，手指闭合过程对工具的力被缓和，
+工具在手指闭合到既定位置时还能下落一定距离。
+这将使得自适应控制器错误的将摩擦系数估计得过小。
+因此在下次张开手指时，控制器计算的夹具位移应该比理论值更小， 也使得工具停止时间增长。
+另一方面，这也导致了夹具位置变化频繁，
+以此保证工具连续运动过程中工具运动曲线能更好的跟踪参考曲线。
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=9.7cm]{chapter04/pic/h_x}
+  \caption{\label{fig:h_x}
+    力控仿真实验中工具位移曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+
+夹具位置信号的变化曲线如图 \ref{fig:p_x} 所示。
+图中夹具位置变化频繁，这是由于工具不连续的运动状态导致的，
+运动过程中需要保持工具运动曲线跟踪参考曲线，所以夹具运动频繁。
+在我们的实验中，我们发现了夹爪手指垫片的刚度系数和工具运动连续程度的定性关系。
+当垫片或胶皮过软，即刚度系数过小时，工具每次停止的时间越长，每段下落距离越长，
+在工具位移曲线图上表现为阶梯状越明显。
+反之运动越连续， 运动曲线对参考曲线的跟踪性能越好。
+这并不难理解， 刚度越低时夹具要使工具开始运动或停止运动需要产生的位移越大，
+在其他条件如夹具运动速度，PD控制系数等参数相同的情况下， 工具对夹具位移的响应越慢，
+因此运动会断断续续， 而且每段运动过程中下落和停止的时间均会增长。
+但是， 刚度也不能过高， 因为这需要系统具有更快的响应速度和更精准的力控。
+否则可能造成系统震荡， 或夹爪由于受力过大而保护性停止。
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=9.7cm]{chapter04/pic/p_x}
+  \caption{\label{fig:p_x}
+    力控仿真实验中夹具位移曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=9.7cm]{chapter04/pic/fn_x}
+  \caption{\label{fig:fn_x}
+    力控仿真实验中物体所受压力曲线}
+  \vspace{-0.3cm}
+\end{figure}
+
+% \begin{figure}[!h]
+%   \centering
+%     \subfloat[夹具位移曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/p_x}
+%     }
+%     \hspace{0pt}
+%     \subfloat[压力变化曲线]{
+%       \includegraphics[width=7.2cm]{chapter04/pic/fn_x}
+%     }
+%   \caption{夹具位移及受力曲线图}
+%   \label{fig:4-11}
+%   \vspace{-0.3cm}
+% \end{figure}
+
+同样，如图\ref{fig:fn_x}在这次实验中夹具施加给物体的压力也会在物体停止后持续增大。
+这也由于超调量使得广义误差大于零且一直累加导致的。
+为了防止位移信号持续增大而使得信号超过阈值造成机器停止等问题，
+我们人为添加了饱和模块，以限制输出的位置指令。
 
 \section{本章小结}
 考虑了实际实验过程中可能会遇到的多线程问题，提出了一个合理的方案。
